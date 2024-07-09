@@ -8,27 +8,29 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 import { LayoutList, Loader, Users } from 'lucide-react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import EndCallButton from './EndCallButton'
 
 
 type CallLayoutType = 'grid' | 'speaker-left' | 'speaker-right'
 
 const MeetingRoom = () => {
+  const searchParams = useSearchParams()
+  const isPersonalRoom = !!searchParams.get('personal')
+
+  const router = useRouter()
+
   const [layout, setLayout] = useState('speaker-left')
   const [showParticipants, setShowParticipants] = useState(false)
+  
   const { useCallCallingState } = useCallStateHooks()
   const callingState = useCallCallingState()
   if(callingState != CallingState.JOINED) return <Loader />
-
-  const searchParams = useSearchParams()
-  const isPersonalRoom = !!searchParams.get('personal')
 
   const CallLayout = () => {
     switch (layout) {
@@ -53,7 +55,7 @@ const MeetingRoom = () => {
       </div>
 
       <div className='fixed bottom-0 flex w-full items-center justify-center gap-5 flex-wrap'>
-        <CallControls />
+        <CallControls onLeave={() => router.push('/')}/>
 
         <DropdownMenu>
           <div className='flex items-center'>

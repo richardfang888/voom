@@ -4,11 +4,10 @@
 import React, { useState } from 'react'
 import HomeCard from './HomeCard'
 import MeetingModal from './MeetingModal'
-import router from 'next/router'
+import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs'
 import { Call, useStreamVideoClient } from '@stream-io/video-react-sdk'
 import { useToast } from "@/components/ui/use-toast"
-import { Loader } from 'lucide-react'
 
 const MeetingTypeList = () => {
     const [meetingState, setMeetingState] = useState<'isSchedulingMeeting' | 'isJoiningMeeting' | 'isStartingMeeting' | undefined>(undefined)
@@ -20,6 +19,7 @@ const MeetingTypeList = () => {
     const [callDetails, setCallDetails] = useState<Call>()
 
     const { toast } = useToast()
+    const router = useRouter();
     
     const { user } = useUser();
     const client = useStreamVideoClient();
@@ -54,7 +54,7 @@ const MeetingTypeList = () => {
             setCallDetails(call)
 
             if(!values.description) {
-                router.push(`/meetings/${call.id}`)
+                router.push(`/meeting/${call.id}`)
             }
 
             toast({
