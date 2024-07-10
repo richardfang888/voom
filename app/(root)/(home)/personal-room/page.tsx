@@ -34,7 +34,7 @@ const PersonalRoom = () => {
 
             await newCall.getOrCreate({
                 data: {
-                    starts_at: new Date().toISOString(),
+                    starts_at: new Date().toISOString().substring(0, 16),
                 }
             })
         }

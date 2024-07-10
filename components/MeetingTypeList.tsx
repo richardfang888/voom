@@ -42,7 +42,7 @@ const MeetingTypeList = () => {
             const call = client.call('default', id)
             
             if(!call) throw new Error('Failed to create meeting')
-            const startsAt = values.dateTime.toISOString() || new Date(Date.now()).toISOString()
+            const startsAt = values.dateTime.toISOString().substring(0, 16) || new Date(Date.now()).toISOString().substring(0, 16)
             const description = values.description || 'Create Meeting'
 
             await call.getOrCreate({
@@ -112,13 +112,13 @@ const MeetingTypeList = () => {
                     handleClick={createMeeting}
                 >
                     <div className='flex flex-col gap-2.5'>
-                        <label className='text-base text-normal leading-[22px] text-sky-2'>Add a description</label>
+                        <label className='text-base font-normal leading-[22.4px] text-sky-2'>Add a description</label>
                         <Textarea className='border-none bg-dark-3 focus-visible:ring-0 focus-visible-ring-offset-0' onChange={(e) => {
                             setValues({...values, description: e.target.value})
                         }}/>
                     </div>
                     <div className='flex w-full flex-col gap-2.5'>
-                        <label className='text-base text-normal leading-[22px] text-sky-2'>Select Date and Time</label>
+                        <label className='text-base text-normal leading-[22.4px] text-sky-2'>Select Date and Time</label>
                         <ReactDatePicker 
                             selected={values.dateTime}
                             onChange={(date) => setValues({...values, dateTime: date!})}

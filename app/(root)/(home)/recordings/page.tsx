@@ -8,7 +8,7 @@ const Recordings = () => {
                 Recordings
             </h1>
 
-            <CallList type='recording' />
+            <CallList type='recordings' />
             
         </section>
     )

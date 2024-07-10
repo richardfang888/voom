@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 
 export const useGetCalls = () => {
-    const [calls, setCalls] = useState<Call[]>([])
-    const [isLoading, setIsLoading] = useState(false)
     const client = useStreamVideoClient()
     const { user } = useUser()
+    const [calls, setCalls] = useState<Call[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
       const loadCalls = async () => {
@@ -43,14 +43,14 @@ export const useGetCalls = () => {
         return (startsAt && new Date(startsAt) < now || !!endedAt)
     })
 
-    const upcomingCalls = calls.filter(({ state: { startsAt, endedAt }}: Call) => {
+    const upcomingCalls = calls.filter(({ state: { startsAt }}: Call) => {
         return startsAt && new Date(startsAt) > now
     })
 
     return {
         endedCalls,
         upcomingCalls,
-        recordings: calls,
+        callRecordings: calls,
         isLoading,
     }
 }
